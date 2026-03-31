@@ -20,11 +20,14 @@ async function getPosts(): Promise<Post[]> {
 const Home = async () => {
   const posts = await getPosts();
 
+  const jobsCategoryId = Number(process.env.NEXT_PUBLIC_JOBS_CATEGORY_ID);
+  const projectsCategoryId = Number(process.env.NEXT_PUBLIC_PROJECTS_CATEGORY_ID);
+
   const jobs = posts.filter((post) =>
-    post.categories.includes(3)
+    post.categories.includes(jobsCategoryId)
   );
-    const projects = posts.filter((post) =>
-    post.categories.includes(4)
+  const projects = posts.filter((post) =>
+    post.categories.includes(projectsCategoryId)
   );
 
   return (
