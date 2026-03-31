@@ -5,6 +5,7 @@ import { Card } from "./components/Card";
 async function getPosts(): Promise<Post[]> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_WP_API_URL}/posts?_embed`,
+    { cache: 'no-store' }
   );
     const raw = await response.json();
   return raw.map((post: any) => ({
