@@ -2,7 +2,7 @@ import { Post, Term } from "../types/types";
 
 interface CardProps {
  post: Post;
- tags: Term;
+ tags: Term[];
 }
 
 export function Card({post, tags}: CardProps) {
