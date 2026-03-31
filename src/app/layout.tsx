@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "A. Wilkes Booth",
+  title: "a. wilkes booth",
   description: "Developer Portfolio",
 };
 

@@ -1,17 +1,27 @@
-interface NavLink {
-  id: number;
-  name: string;
-  path: string;
+import { Post, Term } from "../types/types";
+
+interface CardProps {
+ post: Post;
+ tags: Term;
 }
 
-const Card = () => {
-  const pathname = usePathname();
+export function Card({post, tags}: CardProps) {
+  // const tags = tags;
+
+  console.log('tags', typeof tags)
 
   return (
-    <div className="card">
-                    
+    <div className={`card rounded-md post- mb-4 p-4`} >
+      <h2 className="font-bold text-xl">{post.title}</h2>
+      <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
+      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      <div className="flex flex-wrap gap-2 mt-2">
+        {tags.map(tag => (
+          <span key={tag.id} className="text-xs px-2 py-1 rounded tag">
+            {tag.name}
+          </span>
+        ))}
+      </div>
     </div>
   );
-};
-
-export default Card;
+}
