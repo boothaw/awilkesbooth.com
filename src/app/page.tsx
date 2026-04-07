@@ -32,7 +32,7 @@ const Home = async () => {
   );
 
   return (
-    <div className="flex flex-col flex-1 items-center">
+    <div className="flex flex-col flex-1 items-center body">
         <Animations />
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
           <h1>awilkesbooth.com</h1>

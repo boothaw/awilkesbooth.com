@@ -1,29 +1,65 @@
 'use client'
 import { useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
 export function Animations() {
   useEffect(() => {
     const cards = gsap.utils.toArray<HTMLElement>('.card');
+    const sunEl = document.querySelector<HTMLElement>('.sun');
 
-    console.log('cards', cards)
+    const updateShadows = () => {
+      if (!sunEl) return;
+      const sunRect = sunEl.getBoundingClientRect();
+      const sunX = sunRect.left + sunRect.width / 2;
+      const sunY = sunRect.top + sunRect.height / 2;
 
-    const onMove = (e: MouseEvent) => {
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+        const cardX = rect.left + rect.width / 2;
+        const cardY = rect.top + rect.height / 2;
+        const x = (cardX - sunX) * 0.02;
+        const y = (cardY - sunY) * 0.02;
         gsap.to(card, {
-          boxShadow: `${x * 0.02}px ${y * 0.02}px 0px var(--foreground-opacity)`,
+          boxShadow: `${x}px ${y}px 0px var(--foreground-opacity)`,
           duration: 0.4,
           ease: 'power2.out',
         });
       });
     };
 
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
+    updateShadows();
+    window.addEventListener('scroll', updateShadows);
+    window.addEventListener('resize', updateShadows);
+    return () => {
+      window.removeEventListener('scroll', updateShadows);
+      window.removeEventListener('resize', updateShadows);
+    };
   }, []);
 
-  return null;
+    useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const sunEl = document.querySelector<HTMLElement>('.sun');
+    const container = document.querySelector<HTMLElement>('.body');
+    if (!sunEl || !container) return;
+
+    gsap.to(sunEl, {
+        x: () => container.offsetWidth,
+        scrollTrigger: {
+        trigger: '.body',
+        start: 'top top',
+        end: '100%',
+        scrub: true,
+        },
+    });
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+    }, []);
+
+  return (
+    <>
+    <div className="sun"></div>
+    </>
+  )
 }
