@@ -1,5 +1,6 @@
 import { Post } from "./types/types";
 import { Card } from "./components/Card";
+import { Animations } from "./components/Animations";
 
 
 async function getPosts(): Promise<Post[]> {
@@ -32,10 +33,11 @@ const Home = async () => {
 
   return (
     <div className="flex flex-col flex-1 items-center">
+        <Animations />
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
           <h1>awilkesbooth.com</h1>
           <h2 className="font-bold mb-4">jobs</h2>
-            <div className="cards">
+            <div className="cards gap-8">
               {jobs.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];  
                 return (
@@ -48,7 +50,7 @@ const Home = async () => {
               })}
             </div>
             <h2 className="font-bold mb-4">projects</h2>
-            <div className="cards">
+            <div className="cards gap-8">
               {projects.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];
                 return (

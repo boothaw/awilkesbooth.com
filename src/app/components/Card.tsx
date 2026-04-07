@@ -8,8 +8,6 @@ interface CardProps {
 export function Card({post, tags}: CardProps) {
   // const tags = tags;
 
-  console.log('tags', typeof tags)
-
   return (
     <div className={`card rounded-md post- mb-4 p-4`} >
       <h2 className="font-bold text-xl">{post.title}</h2>
