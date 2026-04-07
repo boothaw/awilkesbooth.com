@@ -45,11 +45,12 @@ export function Animations() {
     if (!sunEl || !container) return;
 
     gsap.to(sunEl, {
-        x: () => container.offsetWidth,
+        x: () => container.offsetWidth - sunEl.offsetWidth - 32,
+        ease: 'power2.out',  // <-- here
         scrollTrigger: {
         trigger: '.body',
         start: 'top top',
-        end: '100%',
+        end: '+=100%',
         scrub: true,
         },
     });
