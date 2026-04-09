@@ -39,41 +39,6 @@ export function Animations() {
 
       // CHANGE: make sure sun path lenght is equal to the entire scroll
 
-    //       useEffect(() => {
-    //   gsap.registerPlugin(ScrollTrigger);
-
-    //   const main = document.querySelector('main');
-    //   if (!main) return;
-
-    //   function initSun() {
-    //     const { left, right } = main!.getBoundingClientRect();
-
-    //     gsap.fromTo('.sun',
-    //       { left },
-    //       {
-    //         left: right,
-    //         ease: 'none',
-    //         scrollTrigger: {
-    //           trigger: document.body,
-    //           start: 'top top',
-    //           end: 'bottom bottom',
-    //           scrub: 0.5,
-    //         }
-    //       }
-    //     );
-    //   }
-
-    //   initSun();
-
-    //   const onResize = () => {
-    //     ScrollTrigger.getAll().forEach(t => t.kill());
-    //     initSun();
-    //   };
-
-    //   window.addEventListener('resize', onResize);
-    //   return () => window.removeEventListener('resize', onResize);
-    // }, []);
-
     useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
