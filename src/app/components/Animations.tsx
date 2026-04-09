@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger} from 'gsap/all';
 
 export function Animations() {
   useEffect(() => {
@@ -37,26 +37,68 @@ export function Animations() {
     };
   }, []);
 
+      // CHANGE: make sure sun path lenght is equal to the entire scroll
+
+    //       useEffect(() => {
+    //   gsap.registerPlugin(ScrollTrigger);
+
+    //   const main = document.querySelector('main');
+    //   if (!main) return;
+
+    //   function initSun() {
+    //     const { left, right } = main!.getBoundingClientRect();
+
+    //     gsap.fromTo('.sun',
+    //       { left },
+    //       {
+    //         left: right,
+    //         ease: 'none',
+    //         scrollTrigger: {
+    //           trigger: document.body,
+    //           start: 'top top',
+    //           end: 'bottom bottom',
+    //           scrub: 0.5,
+    //         }
+    //       }
+    //     );
+    //   }
+
+    //   initSun();
+
+    //   const onResize = () => {
+    //     ScrollTrigger.getAll().forEach(t => t.kill());
+    //     initSun();
+    //   };
+
+    //   window.addEventListener('resize', onResize);
+    //   return () => window.removeEventListener('resize', onResize);
+    // }, []);
+
     useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const sunEl = document.querySelector<HTMLElement>('.sun');
-    const container = document.querySelector<HTMLElement>('.body');
-    if (!sunEl || !container) return;
+    const main = document.querySelector<HTMLElement>('.body main');
+
+    if (!sunEl || !main) return;
 
     gsap.to(sunEl, {
-        x: () => container.offsetWidth - sunEl.offsetWidth - 32,
-        ease: 'power2.out',  // <-- here
+        x: () => window.innerWidth - sunEl.offsetWidth - 32, // 16 = 1em right margin
+        ease: 'none',
         scrollTrigger: {
-        trigger: '.body',
+        trigger: 'body',
         start: 'top top',
-        end: '+=100%',
+        end: () => `+=${ScrollTrigger.maxScroll(window)}`,
         scrub: true,
+        invalidateOnRefresh: true,
+        // markers: true, // remove once fixed
         },
     });
 
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
     }, []);
+
+    // NEXT: scroll snap trigger on cards 
 
   return (
     <>
