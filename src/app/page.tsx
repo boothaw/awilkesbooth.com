@@ -37,7 +37,7 @@ const Home = async () => {
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
           <h1>awilkesbooth.com</h1>
           <h2 className="font-bold mb-4">jobs</h2>
-            <div className="cards gap-8">
+            <div className="cards gap-8 flex flex-col">
               {jobs.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];  
                 return (
@@ -50,7 +50,7 @@ const Home = async () => {
               })}
             </div>
             <h2 className="font-bold mb-4">projects</h2>
-            <div className="cards gap-8">
+            <div className="cards gap-8 flex flex-col">
               {projects.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];
                 return (

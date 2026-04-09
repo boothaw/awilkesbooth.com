@@ -2,8 +2,21 @@
 import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger} from 'gsap/all';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 
 export function Animations() {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    const smoother = ScrollSmoother.create({
+      wrapper: '#smooth-wrapper',
+      content: '#smooth-content',
+      smooth: .75,
+      effects: true,
+    });
+
+    return () => smoother.kill();
+  }, []);
   useEffect(() => {
     const cards = gsap.utils.toArray<HTMLElement>('.card');
     const sunEl = document.querySelector<HTMLElement>('.sun');
@@ -16,10 +29,10 @@ export function Animations() {
 
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
-        const cardX = rect.left + rect.width / 2;
-        const cardY = rect.top + rect.height / 2;
-        const x = (cardX - sunX) * 0.02;
-        const y = (cardY - sunY) * 0.02;
+        const cardX = rect.left + rect.width / 4;
+        const cardY = rect.top + rect.height / 4;
+        const x = (cardX - sunX) * 0.04;
+        const y = (cardY - sunY) * 0.04;
         gsap.to(card, {
           boxShadow: `${x}px ${y}px 0px var(--foreground-opacity)`,
           duration: 0.4,
@@ -65,9 +78,5 @@ export function Animations() {
 
     // NEXT: scroll snap trigger on cards 
 
-  return (
-    <>
-    <div className="sun"></div>
-    </>
-  )
+  return null;
 }
