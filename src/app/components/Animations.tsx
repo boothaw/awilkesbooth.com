@@ -56,8 +56,6 @@ export function Animations() {
     };
   }, []);
 
-      // CHANGE: make sure sun path lenght is equal to the entire scroll
-
     useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -75,14 +73,54 @@ export function Animations() {
         end: () => `+=${ScrollTrigger.maxScroll(window)}`,
         scrub: true,
         invalidateOnRefresh: true,
-        // markers: true, // remove once fixed
         },
     });
 
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
     }, []);
 
-    // NEXT: scroll snap trigger on cards 
+  useEffect(() => {
+    const cards = gsap.utils.toArray<HTMLElement>('.card, .title-card');
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+      // Fade in as card enters from the bottom
+      gsap.fromTo(card,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            end: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      // // Fade out as card exits at the top
+      gsap.fromTo(card,
+        { opacity: 1, y: 0, immediateRender: false },
+        {
+          opacity: 0,
+          y: -30,
+          duration: 0.5,
+          ease: 'power3.in',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 5%',
+            end: 'top 20%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    });
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+  }, []);
 
   return null;
 }
