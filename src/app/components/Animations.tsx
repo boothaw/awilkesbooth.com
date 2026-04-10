@@ -43,6 +43,7 @@ export function Animations() {
           background: `linear-gradient(${angle}deg, #fff 5%, #f5a62305 15%, #60a6e122 90%)`,
           duration: 0.4,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       });
     };
@@ -90,13 +91,13 @@ export function Animations() {
         {
           opacity: 1,
           y: 0,
-          duration: 0.5,
           ease: 'power3.out',
+          overwrite: 'auto',
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
-            end: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 87%',
+            end: 'top 67%',
+            scrub: 0.5,
           },
         }
       );
