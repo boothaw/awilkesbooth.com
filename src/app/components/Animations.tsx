@@ -18,8 +18,13 @@ export function Animations() {
     return () => smoother.kill();
   }, []);
   useEffect(() => {
-    const cards = gsap.utils.toArray<HTMLElement>('.card');
+    const cards = gsap.utils.toArray<HTMLElement>('.card, .title-card');
     const sunEl = document.querySelector<HTMLElement>('.sun');
+
+
+    cards.forEach((card) => {
+  console.log(card.childNodes[0]);
+});
 
     const updateShadows = () => {
       if (!sunEl) return;

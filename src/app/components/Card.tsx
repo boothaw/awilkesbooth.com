@@ -10,7 +10,7 @@ export function Card({post, tags}: CardProps) {
 
   return (
     <div className={`card rounded-md post- mb-4 p-4`} >
-      <h2 className="font-bold text-xl">{post.title}</h2>
+      <h2 className="font-bold text-xl mb-4">{post.title}</h2>
       <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
       <div className="flex flex-wrap gap-2 mt-2">
