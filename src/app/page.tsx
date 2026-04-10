@@ -1,5 +1,6 @@
 import { Post } from "./types/types";
 import { Card } from "./components/Card";
+import { Animations } from "./components/Animations";
 
 
 async function getPosts(): Promise<Post[]> {
@@ -31,11 +32,17 @@ const Home = async () => {
   );
 
   return (
-    <div className="flex flex-col flex-1 items-center">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
-          <h1>awilkesbooth.com</h1>
-          <h2 className="font-bold mb-4">jobs</h2>
-            <div className="cards">
+    <div className="flex flex-col flex-1 items-center body">
+        <Animations />
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between gap-4 py-32 px-16 sm:items-start">
+        
+          <div className="title-card rounded-md mb-4 p-4">
+            <h1 className="text-2xl font-bold">awilkesbooth.com</h1>
+          </div>  
+          <div className="title-card rounded-md mb-4 p-4">
+            <h2 className="text-lg font-bold mb-0">jobs</h2>
+          </div>  
+            <div className="cards gap-8 flex flex-col">
               {jobs.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];  
                 return (
@@ -47,8 +54,10 @@ const Home = async () => {
                 );
               })}
             </div>
-            <h2 className="font-bold mb-4">projects</h2>
-            <div className="cards">
+            <div className="title-card rounded-md mb-4 p-4">
+              <h2 className="text-lg font-bold mb-0">projects</h2>
+            </div>  
+            <div className="cards gap-8 flex flex-col">
               {projects.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];
                 return (
