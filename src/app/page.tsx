@@ -34,7 +34,7 @@ const Home = async () => {
   return (
     <div className="flex flex-col flex-1 items-center body">
         <Animations />
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between gap-4 py-32 px-16 sm:items-start">
+      <main className="flex flex-1 w-full flex-col items-center justify-between gap-4 max-w-[90%] py-32 md:max-w-3xl">
         
           <div className="title-card rounded-md mb-4 p-4">
             <h1 className="text-2xl font-bold">awilkesbooth.com</h1>
