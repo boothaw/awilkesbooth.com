@@ -21,11 +21,6 @@ export function Animations() {
     const cards = gsap.utils.toArray<HTMLElement>('.card, .title-card');
     const sunEl = document.querySelector<HTMLElement>('.sun');
 
-
-    cards.forEach((card) => {
-  console.log(card.childNodes[0]);
-});
-
     const updateShadows = () => {
       if (!sunEl) return;
       const sunRect = sunEl.getBoundingClientRect();
@@ -38,8 +33,14 @@ export function Animations() {
         const cardY = rect.top + rect.height / 4;
         const x = (cardX - sunX) * 0.04;
         const y = (cardY - sunY) * 0.04;
+
+        const dx = sunX - cardX;
+        const dy = sunY - cardY;
+        const angle = Math.atan2(dx, -dy) * (180 / Math.PI) + 180;
+
         gsap.to(card, {
           boxShadow: `${x}px ${y}px 0px var(--foreground-opacity)`,
+          background: `linear-gradient(${angle}deg, #fff 5%, #f5a62305 15%, #60a6e122 90%)`,
           duration: 0.4,
           ease: 'power2.out',
         });
