@@ -11,7 +11,7 @@ export function Animations() {
     const smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      smooth: .75,
+      smooth: 1,
       effects: true,
     });
 
