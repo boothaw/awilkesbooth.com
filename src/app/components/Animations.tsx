@@ -85,7 +85,12 @@ export function Animations() {
     if (!cards.length) return;
 
     cards.forEach((card) => {
-      // Fade in as card enters from the bottom
+      const heightRatio = Math.min(card.offsetHeight / window.innerHeight, 1);
+
+      // Fade in sooner for taller cards (push trigger zone lower on screen)
+      const entryStart = Math.round(87 + heightRatio * 8);
+      const entryEnd = Math.round(67 + heightRatio * 8);
+
       gsap.fromTo(card,
         { opacity: 0, y: 30 },
         {
@@ -95,14 +100,18 @@ export function Animations() {
           overwrite: 'auto',
           scrollTrigger: {
             trigger: card,
-            start: 'top 87%',
-            end: 'top 67%',
+            start: `top ${entryStart}%`,
+            end: `top ${entryEnd}%`,
             scrub: 0.5,
+            invalidateOnRefresh: true,
           },
         }
       );
 
-      // // Fade out as card exits at the top
+      // Fade out later for taller cards (push trigger zone closer to top edge)
+      const exitStart = Math.round(5 - heightRatio * 4);
+      const exitEnd = Math.round(20 - heightRatio * 10);
+
       gsap.fromTo(card,
         { opacity: 1, y: 0, immediateRender: false },
         {
@@ -112,9 +121,10 @@ export function Animations() {
           ease: 'power3.in',
           scrollTrigger: {
             trigger: card,
-            start: 'top 5%',
-            end: 'top 20%',
+            start: `top ${exitStart}%`,
+            end: `top ${exitEnd}%`,
             toggleActions: 'play none none reverse',
+            invalidateOnRefresh: true,
           },
         }
       );
