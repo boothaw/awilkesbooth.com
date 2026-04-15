@@ -29,7 +29,7 @@ export function Animations() {
 
       // Stronger multiplier on narrow viewports — sun is closer to cards
       // so the raw distance is smaller and needs more amplification.
-      const shadowScale = window.innerWidth < 768 ? 0.08 : 0.06;
+      const shadowScale = window.innerWidth < 768 ? 0.06 : 0.06;
 
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();

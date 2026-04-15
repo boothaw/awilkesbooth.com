@@ -19,6 +19,9 @@ async function getPosts(): Promise<Post[]> {
 }
 
 const Home = async () => {
+  // DEV ONLY: artificial delay to preview loading.tsx — remove before deploying
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const posts = await getPosts();
 
   const jobsCategoryId = Number(process.env.NEXT_PUBLIC_JOBS_CATEGORY_ID);
@@ -39,9 +42,9 @@ const Home = async () => {
           <div className="title-card rounded-md mb-4 p-4">
             <h1 className="text-2xl font-bold">awilkesbooth.com</h1>
           </div>  
-          <div className="title-card rounded-md mb-4 p-4">
+          {/* <div className="title-card rounded-md mb-4 p-4">
             <h2 className="text-lg font-bold mb-0">jobs</h2>
-          </div>  
+          </div>   */}
             <div className="cards gap-8 flex flex-col">
               {jobs.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];  
@@ -54,9 +57,9 @@ const Home = async () => {
                 );
               })}
             </div>
-            <div className="title-card rounded-md mb-4 p-4">
+            {/* <div className="title-card rounded-md mb-4 p-4">
               <h2 className="text-lg font-bold mb-0">projects</h2>
-            </div>  
+            </div>   */}
             <div className="cards gap-8 flex flex-col">
               {projects.map((post) => {
                 const tags = post._embedded?.['wp:term']?.flat().filter(t => t.taxonomy === 'post_tag') ?? [];

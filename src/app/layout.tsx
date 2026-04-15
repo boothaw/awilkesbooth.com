@@ -29,6 +29,7 @@ export default function RootLayout({
     >
       <body className="body">
         <div className="sun"></div>
+        <div className="loading-horizon"></div>
         <div id="smooth-wrapper">
           <div id="smooth-content" className="min-h-full flex flex-col">
             {children}

@@ -74,6 +74,44 @@ a {
   }
 }
 
+@keyframes sunRise {
+  0% {
+    transform: translate(calc(50vw - 1em - 50%), calc(40vh - 1em));
+  }
+  50% {
+    /* arc peak */
+    transform: translate(calc(25vw - 0.5em - 25%), -2em);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes horizonFade {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loading-horizon {
+  position: fixed;
+  top: 40vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background);
+  z-index: 6;
+  pointer-events: none;
+  animation: horizonFade 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 .sun {
   height: 5em;
   width: 5em;
@@ -83,6 +121,7 @@ a {
   top: 1em;
   left: 1em;
   z-index: 5;
+  animation: sunRise 5s linear both;
 }
 
 @media screen and (max-width: 900px) {
