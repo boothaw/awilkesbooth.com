@@ -74,18 +74,6 @@ a {
   }
 }
 
-/* x-axis: slow start, accelerates toward the corner */
-@keyframes sunRiseX {
-  from { transform: translateX(calc(50vw - 1em - 50%)); }
-  to   { transform: translateX(0); }
-}
-
-/* y-axis: rises quickly then overshoots slightly before settling */
-@keyframes sunRiseY {
-  from { transform: translateY(calc(40vh - 1em)); }
-  to   { transform: translateY(0); }
-}
-
 @keyframes horizonFade {
   0%, 50% { opacity: 1; }
   65%      { opacity: 0; }
@@ -104,22 +92,18 @@ a {
   animation: horizonFade 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* wrapper drives x — ease-in so x starts slow and accelerates */
 .sun-wrapper {
   position: fixed;
   top: 1em;
   left: 1em;
   z-index: 5;
-  animation: sunRiseX 5s cubic-bezier(0.4, 0, 1, 1) both;
 }
 
-/* sun drives y — ease-out with overshoot so it rises fast then dips above target */
 .sun {
   height: 5em;
   width: 5em;
   background-color: var(--yellow);
   border-radius: 50%;
-  animation: sunRiseY 5s cubic-bezier(0.2, 1.4, 0.6, 1) both;
 }
 
 @media screen and (max-width: 900px) {
