@@ -11,7 +11,7 @@ export function Animations() {
     const smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      smooth: 1,
+      smooth: 1.2,
       effects: true,
     });
 
@@ -27,12 +27,16 @@ export function Animations() {
       const sunX = sunRect.left + sunRect.width / 2;
       const sunY = sunRect.top + sunRect.height / 2;
 
+      // Stronger multiplier on narrow viewports — sun is closer to cards
+      // so the raw distance is smaller and needs more amplification.
+      const shadowScale = window.innerWidth < 768 ? 0.08 : 0.06;
+
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
         const cardX = rect.left + rect.width / 4;
         const cardY = rect.top + rect.height / 4;
-        const x = (cardX - sunX) * 0.04;
-        const y = (cardY - sunY) * 0.04;
+        const x = (cardX - sunX) * shadowScale;
+        const y = (cardY - sunY) * shadowScale;
 
         const dx = sunX - cardX;
         const dy = sunY - cardY;
@@ -49,15 +53,11 @@ export function Animations() {
     };
 
     updateShadows();
-    window.addEventListener('scroll', updateShadows);
-    window.addEventListener('resize', updateShadows);
-    return () => {
-      window.removeEventListener('scroll', updateShadows);
-      window.removeEventListener('resize', updateShadows);
-    };
+    gsap.ticker.add(updateShadows);
+    return () => gsap.ticker.remove(updateShadows);
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const sunEl = document.querySelector<HTMLElement>('.sun');
@@ -65,20 +65,25 @@ export function Animations() {
 
     if (!sunEl || !main) return;
 
-    gsap.to(sunEl, {
-        x: () => window.innerWidth - sunEl.offsetWidth - 32, // 16 = 1em right margin
+    const mm = gsap.matchMedia();
+
+    // Desktop only: sun travels across the page as you scroll
+    mm.add('(min-width: 768px)', () => {
+      gsap.to(sunEl, {
+        x: () => window.innerWidth - sunEl.offsetWidth - 32,
         ease: 'none',
         scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: () => `+=${ScrollTrigger.maxScroll(window)}`,
-        scrub: true,
-        invalidateOnRefresh: true,
+          trigger: 'body',
+          start: 'top top',
+          end: () => `+=${ScrollTrigger.maxScroll(window)}`,
+          scrub: true,
+          invalidateOnRefresh: true,
         },
+      });
     });
 
-    return () => ScrollTrigger.getAll().forEach(t => t.kill());
-    }, []);
+    return () => mm.revert();
+  }, []);
 
   useEffect(() => {
     const cards = gsap.utils.toArray<HTMLElement>('.card, .title-card');
@@ -108,22 +113,19 @@ export function Animations() {
         }
       );
 
-      // Fade out later for taller cards (push trigger zone closer to top edge)
-      const exitStart = Math.round(5 - heightRatio * 4);
-      const exitEnd = Math.round(20 - heightRatio * 10);
-
+      // Fade out as the card's bottom edge approaches the top of the viewport
       gsap.fromTo(card,
-        { opacity: 1, y: 0, immediateRender: false },
+        { opacity: 1, y: 0 },
         {
           opacity: 0,
           y: -30,
-          duration: 0.5,
           ease: 'power3.in',
+          immediateRender: false,
           scrollTrigger: {
             trigger: card,
-            start: `top ${exitStart}%`,
-            end: `top ${exitEnd}%`,
-            toggleActions: 'play none none reverse',
+            start: 'bottom 25%',
+            end: 'bottom 0%',
+            scrub: 0.5,
             invalidateOnRefresh: true,
           },
         }
