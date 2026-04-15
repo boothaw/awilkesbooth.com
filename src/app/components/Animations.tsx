@@ -60,7 +60,7 @@ export function Animations() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const sunEl = document.querySelector<HTMLElement>('.sun');
+    const sunEl = document.querySelector<HTMLElement>('.sun-wrapper');
     const main = document.querySelector<HTMLElement>('.body main');
 
     if (!sunEl || !main) return;

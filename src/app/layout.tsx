@@ -28,7 +28,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="body">
-        <div className="sun"></div>
+        <div className="sun-wrapper">
+          <div className="sun"></div>
+        </div>
         <div className="loading-horizon"></div>
         <div id="smooth-wrapper">
           <div id="smooth-content" className="min-h-full flex flex-col">
