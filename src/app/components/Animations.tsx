@@ -27,16 +27,16 @@ export function Animations() {
       const sunX = sunRect.left + sunRect.width / 2;
       const sunY = sunRect.top + sunRect.height / 2;
 
-      // Stronger multiplier on narrow viewports — sun is closer to cards
-      // so the raw distance is smaller and needs more amplification.
-      const shadowScale = window.innerWidth < 768 ? 0.06 : 0.06;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const shadowMax = 36;
 
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
         const cardX = rect.left + rect.width / 4;
         const cardY = rect.top + rect.height / 4;
-        const x = (cardX - sunX) * shadowScale;
-        const y = (cardY - sunY) * shadowScale;
+        const x = ((cardX - sunX) / vw) * shadowMax;
+        const y = ((cardY - sunY) / vh) * shadowMax;
 
         const dx = sunX - cardX;
         const dy = sunY - cardY;
@@ -69,18 +69,22 @@ export function Animations() {
 
     // Desktop only: sun travels across the page as you scroll
     mm.add('(min-width: 768px)', () => {
-      gsap.delayedCall(2, () => {
-        gsap.to(sunEl, {
-          x: () => window.innerWidth - sunEl.offsetWidth - 32,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: 'body',
-            start: 'top top',
-            end: () => `+=${ScrollTrigger.maxScroll(window)}`,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
+      gsap.delayedCall(6, () => {
+        gsap.fromTo(sunEl,
+          { x: 0 },
+          {
+            x: () => window.innerWidth - sunEl.offsetWidth - 32,
+            ease: 'none',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: 'body',
+              start: 'top top',
+              end: () => `+=${ScrollTrigger.maxScroll(window)}`,
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
       });
     });
 

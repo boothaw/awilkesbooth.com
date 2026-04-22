@@ -5,6 +5,7 @@ import gsap from 'gsap';
 export function SunAnimation() {
   useLayoutEffect(() => {
     const sunEl = document.querySelector<HTMLElement>('.sun-wrapper');
+    const contentEl = document.querySelector<HTMLElement>('.body main');
     if (!sunEl) return;
 
     const sunRect = sunEl.getBoundingClientRect();
@@ -17,6 +18,7 @@ export function SunAnimation() {
     const startY = horizonY - naturalTop;
 
     gsap.set(sunEl, { x: startX, y: startY });
+    if (contentEl) gsap.set(contentEl, { opacity: 0 });
 
     const tl = gsap.timeline({
       onComplete: () => gsap.set(sunEl, { clearProps: 'transform' }),
@@ -29,9 +31,14 @@ export function SunAnimation() {
       scale: 1.25
     }, { scale: 1.0, x: 0, duration: 2, ease: 'power2.inOut' });
 
+    if (contentEl) {
+      tl.to(contentEl, { opacity: 1, duration: 1.5, ease: 'power2.out' }, 5);
+    }
+
     return () => {
       tl.kill();
       gsap.set(sunEl, { clearProps: 'transform' });
+      if (contentEl) gsap.set(contentEl, { clearProps: 'opacity' });
     };
   }, []);
 
