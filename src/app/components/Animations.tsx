@@ -11,7 +11,7 @@ export function Animations() {
     const smoother = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      smooth: 1.2,
+      smooth: 0,
       effects: true,
     });
 
@@ -97,8 +97,8 @@ export function Animations() {
       const heightRatio = Math.min(card.offsetHeight / window.innerHeight, 1);
 
       // Fade in sooner for taller cards (push trigger zone lower on screen)
-      const entryStart = Math.round(87 + heightRatio * 8);
-      const entryEnd = Math.round(67 + heightRatio * 8);
+      const entryStart = Math.round(87 + heightRatio * 4);
+      const entryEnd = Math.round(67 + heightRatio * 4);
 
       gsap.fromTo(card,
         { opacity: 0, y: 30 },
@@ -127,7 +127,7 @@ export function Animations() {
           immediateRender: false,
           scrollTrigger: {
             trigger: card,
-            start: 'bottom 30%',
+            start: 'bottom 40%',
             end: 'bottom 0%',
             scrub: 0.5,
             invalidateOnRefresh: true,
@@ -155,19 +155,26 @@ export function Animations() {
 
     const st = ScrollTrigger.create({
       snap: {
-        snapTo: (progress) => {
+        snapTo: (progress, self) => {
           const maxScroll = ScrollTrigger.maxScroll(window);
           if (maxScroll === 0) return progress;
           const vh = window.innerHeight;
           const positions = cards.map((card) => {
             const centered = getOffsetTop(card) - vh / 2 + card.offsetHeight / 2;
             return Math.max(0, Math.min(maxScroll, centered)) / maxScroll;
-          });
-          return gsap.utils.snap(positions)(progress);
+          }).sort((a, b) => a - b);
+
+          if (self.direction === 1) {
+            const ahead = positions.filter(p => p > progress + 0.001);
+            return ahead.length ? ahead[0] : positions[positions.length - 1];
+          } else {
+            const behind = positions.filter(p => p < progress - 0.001);
+            return behind.length ? behind[behind.length - 1] : positions[0];
+          }
         },
-        duration: { min: 0.2, max: 0.6 },
+        duration: { min: 0.5, max: 1.0 },
         ease: 'power2.inOut',
-        delay: 0.05,
+        delay: 0,
       },
       invalidateOnRefresh: true,
     });
