@@ -40,7 +40,7 @@ const Home = async () => {
       <main className="flex flex-1 w-full flex-col items-center justify-between gap-4 max-w-[90%] py-16 md:max-w-3xl">
         
           <div className="title-card rounded-md mb-4 p-4">
-            <h1 className="text-2xl font-bold">awilkesbooth.com</h1>
+            <h1 className="text-2xl font-bold">(anderson) wilkes booth</h1>
           </div>  
           {/* <div className="title-card rounded-md mb-4 p-4">
             <h2 className="text-lg font-bold mb-0">jobs</h2>

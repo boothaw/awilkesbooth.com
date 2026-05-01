@@ -69,23 +69,21 @@ export function Animations() {
 
     // Desktop only: sun travels across the page as you scroll
     mm.add('(min-width: 768px)', () => {
-      gsap.delayedCall(6, () => {
-        gsap.fromTo(sunEl,
-          { x: 0 },
-          {
-            x: () => window.innerWidth - sunEl.offsetWidth - 32,
-            ease: 'none',
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: 'body',
-              start: 'top top',
-              end: () => `+=${ScrollTrigger.maxScroll(window)}`,
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-      });
+      gsap.fromTo(sunEl,
+        { x: 0 },
+        {
+          x: () => window.innerWidth - sunEl.offsetWidth - 32,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: 'body',
+            start: 'top top',
+            end: () => `+=${ScrollTrigger.maxScroll(window)}`,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
     });
 
     return () => mm.revert();

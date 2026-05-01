@@ -26,13 +26,13 @@ export function SunAnimation() {
 
     tl.fromTo(sunEl, {
       scale: 2
-    },{scale: 1.25, y: 0, duration: 4, ease: 'power2.out' });
+    },{scale: 1.25, y: 0, duration: 2.5, ease: 'power2.out' });
     tl.fromTo(sunEl,{
       scale: 1.25
-    }, { scale: 1.0, x: 0, duration: 2, ease: 'power2.inOut' });
+    }, { scale: 1.0, x: 0, duration: 2.5, ease: 'power2.inOut' });
 
     if (contentEl) {
-      tl.to(contentEl, { opacity: 1, duration: 1.5, ease: 'power2.out' }, 5);
+      tl.to(contentEl, { opacity: 1, duration: 2, ease: 'power2.inOut' }, 4);
     }
 
     return () => {
