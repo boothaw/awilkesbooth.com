@@ -127,7 +127,7 @@ export function Animations() {
           immediateRender: false,
           scrollTrigger: {
             trigger: card,
-            start: 'bottom 25%',
+            start: 'bottom 30%',
             end: 'bottom 0%',
             scrub: 0.5,
             invalidateOnRefresh: true,
@@ -137,6 +137,42 @@ export function Animations() {
     });
 
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
+  }, []);
+
+  useEffect(() => {
+    const cards = gsap.utils.toArray<HTMLElement>('.card, .title-card');
+    if (!cards.length) return;
+
+    const getOffsetTop = (el: HTMLElement): number => {
+      let top = 0;
+      let cur: HTMLElement | null = el;
+      while (cur) {
+        top += cur.offsetTop;
+        cur = cur.offsetParent as HTMLElement | null;
+      }
+      return top;
+    };
+
+    const st = ScrollTrigger.create({
+      snap: {
+        snapTo: (progress) => {
+          const maxScroll = ScrollTrigger.maxScroll(window);
+          if (maxScroll === 0) return progress;
+          const vh = window.innerHeight;
+          const positions = cards.map((card) => {
+            const centered = getOffsetTop(card) - vh / 2 + card.offsetHeight / 2;
+            return Math.max(0, Math.min(maxScroll, centered)) / maxScroll;
+          });
+          return gsap.utils.snap(positions)(progress);
+        },
+        duration: { min: 0.2, max: 0.6 },
+        ease: 'power2.inOut',
+        delay: 0.05,
+      },
+      invalidateOnRefresh: true,
+    });
+
+    return () => st.kill();
   }, []);
 
   return null;
