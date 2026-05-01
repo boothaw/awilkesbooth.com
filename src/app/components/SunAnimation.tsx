@@ -21,7 +21,7 @@ export function SunAnimation() {
     if (contentEl) gsap.set(contentEl, { opacity: 0 });
 
     const tl = gsap.timeline({
-      onComplete: () => gsap.set(sunEl, { clearProps: 'transform' }),
+      onComplete: () => { gsap.set(sunEl, { clearProps: 'transform' }); },
     });
 
     tl.fromTo(sunEl, {
