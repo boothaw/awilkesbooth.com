@@ -59,6 +59,8 @@ a {
 
 .title-card,
 .card {
+  /* visibility: hidden; */
+  opacity: 0;
   border: 4px solid var(--foreground);
   box-shadow: 5px 5px 0px var(--foreground-opacity);
 
@@ -72,13 +74,41 @@ a {
   }
 }
 
+@keyframes horizonFade {
+  0%, 50% { opacity: 1; }
+  65%      { opacity: 0; }
+  100%     { opacity: 0; }
+}
+
+.loading-horizon {
+  position: fixed;
+  top: 40vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background);
+  z-index: 6;
+  pointer-events: none;
+  animation: horizonFade 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.sun-wrapper {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  z-index: 5;
+}
+
 .sun {
   height: 5em;
   width: 5em;
   background-color: var(--yellow);
   border-radius: 50%;
-  position: fixed;
-  top: 1em;
-  left: 1em;
-  z-index: 5;
+}
+
+@media screen and (max-width: 900px) {
+  .sun {
+    width: 2.5em;
+    height: 2.5em;
+  }
 }
