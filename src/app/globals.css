@@ -13,8 +13,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-brand-yellow: var(--yellow);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-unbounded: var(--font-unbounded);
+  --font-space-grotesk: var(--font-space-grotesk);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,11 +24,18 @@
   }
 }
 
+h1,
+h2,
+h3,
+strong {
+  font-family: (--font-unbounded);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
   position: relative;
+  font-family: var(--font-space-grotesk);
 }
 
 #smooth-wrapper {
@@ -75,9 +82,16 @@ a {
 }
 
 @keyframes horizonFade {
-  0%, 50% { opacity: 1; }
-  65%      { opacity: 0; }
-  100%     { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .loading-horizon {
