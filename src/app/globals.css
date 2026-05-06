@@ -13,8 +13,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-brand-yellow: var(--yellow);
-  --font-unbounded: var(--font-unbounded);
-  --font-space-grotesk: var(--font-space-grotesk);
+  --color-brand-blue: var(--blue);
+  --color-brand-foreground-opacity: var(--foreground-opacity);
+  --font-display: var(--font-unbounded);
+  --font-body: var(--font-space-grotesk);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,14 +30,19 @@ h1,
 h2,
 h3,
 strong {
-  font-family: var(--font-unbounded);
+  font-family: var(--font-display);
+}
+
+strong {
+  font-weight: bold;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   position: relative;
-  font-family: var(--font-space-grotesk);
+  font-family: var(--font-body);
+  font-size: 1em;
 }
 
 #smooth-wrapper {
@@ -71,6 +78,16 @@ a {
   border: 4px solid var(--foreground);
   box-shadow: 5px 5px 0px var(--foreground-opacity);
 
+  h2 {
+    color: var(--foreground-opacity);
+    font-size: 1em;
+
+    strong {
+      color: var(--foreground);
+      font-size: 1.5em;
+    }
+  }
+
   p,
   ul {
     margin-bottom: 0.5em;
@@ -78,6 +95,7 @@ a {
 
   .tag {
     background-color: var(--blue-opacity);
+    border: 2px solid var(--foreground-opacity);
   }
 }
 
@@ -88,8 +106,12 @@ a {
 }
 
 @keyframes horizonFade {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .loading-horizon {
