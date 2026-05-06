@@ -5,7 +5,9 @@ import gsap from 'gsap';
 export function SunAnimation() {
   useLayoutEffect(() => {
     const sunEl = document.querySelector<HTMLElement>('.sun-wrapper');
+    const sun = document.querySelector<HTMLElement>('.sun-wrapper .sun');
     const contentEl = document.querySelector<HTMLElement>('.body main');
+    const horizonEl = document.querySelector<HTMLElement>('.loading-horizon');
     if (!sunEl) return;
 
     const sunRect = sunEl.getBoundingClientRect();
@@ -30,14 +32,23 @@ export function SunAnimation() {
     tl.fromTo(sunEl,{
       scale: 1.25
     }, { scale: 1.0, x: 0, duration: 2.5, ease: 'power2.inOut' });
+    tl.fromTo(sun,
+      { boxShadow: "0px 0px 0px 0px #f5a623" },
+      { boxShadow: "0px 0px 15px 2px #f5a623", duration: 1.5, ease: "power2.out" },
+      "<0.5"
+    )
 
+    if (horizonEl) {
+      tl.to(horizonEl, { opacity: 0, duration: .2, ease: 'power2.in' }, 0.5);
+    }
     if (contentEl) {
-      tl.to(contentEl, { opacity: 1, duration: 2, ease: 'power2.inOut' }, 4);
+      tl.to(contentEl, { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, 2.5);
     }
 
     return () => {
       tl.kill();
       gsap.set(sunEl, { clearProps: 'transform' });
+      if (horizonEl) gsap.set(horizonEl, { clearProps: 'opacity' });
       if (contentEl) gsap.set(contentEl, { clearProps: 'opacity' });
     };
   }, []);

@@ -9,7 +9,7 @@ export function Card({post, tags}: CardProps) {
   // const tags = tags;
 
   return (
-    <div className={`card rounded-md post- mb-4 p-4`} >
+    <div className={`card rounded-sm post- mb-4 p-4`} >
       <h2 className="font-bold text-xl mb-4">{post.title}</h2>
       <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
       <div dangerouslySetInnerHTML={{ __html: post.content }} />

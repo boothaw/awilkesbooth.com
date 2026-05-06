@@ -29,9 +29,6 @@ async function getSiteInfo(): Promise<SiteInfo> {
 }
 
 const Home = async () => {
-  // DEV ONLY: artificial delay to preview loading.tsx — remove before deploying
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
-
   const posts = await getPosts();
 
   const jobsCategoryId = Number(process.env.NEXT_PUBLIC_JOBS_CATEGORY_ID);
@@ -51,11 +48,11 @@ const Home = async () => {
         <Animations />
       <main className="flex flex-1 w-full flex-col items-center justify-between gap-4 max-w-[90%] py-16 md:max-w-3xl">
         
-          <div className="title-card rounded-md mb-4 p-4">
+          <div className="title-card rounded-sm mb-4 p-4">
             <h1 className="text-2xl font-bold">{siteInfo.name}</h1>
-            <p>{siteInfo.description}</p>
+            <p className="mb-0">{siteInfo.description}</p>
           </div>
-          {/* <div className="title-card rounded-md mb-4 p-4">
+          {/* <div className="title-card rounded-sm mb-4 p-4">
             <h2 className="text-lg font-bold mb-0">jobs</h2>
           </div>   */}
             <div className="cards gap-8 flex flex-col">
@@ -70,7 +67,7 @@ const Home = async () => {
                 );
               })}
             </div>
-            {/* <div className="title-card rounded-md mb-4 p-4">
+            {/* <div className="title-card rounded-sm mb-4 p-4">
               <h2 className="text-lg font-bold mb-0">projects</h2>
             </div>   */}
             <div className="cards gap-8 flex flex-col">
