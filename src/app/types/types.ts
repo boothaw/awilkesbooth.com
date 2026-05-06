@@ -1,3 +1,8 @@
+export interface SiteInfo {
+  name: string;
+  description: string;
+}
+
 export interface Term {
   id: number;
   name: string;

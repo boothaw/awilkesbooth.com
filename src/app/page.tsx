@@ -1,4 +1,4 @@
-import { Post } from "./types/types";
+import { Post, SiteInfo } from "./types/types";
 import { Card } from "./components/Card";
 import { Animations } from "./components/Animations";
 
@@ -15,12 +15,22 @@ async function getPosts(): Promise<Post[]> {
     excerpt: post.excerpt.rendered,
     content: post.content.rendered,
   }));
+}
 
+async function getSiteInfo(): Promise<SiteInfo> {
+  const wpRoot = process.env.NEXT_PUBLIC_WP_API_URL!.replace(/\/wp\/v2\/?$/, '');
+  const response = await fetch(
+    `${wpRoot}/`,
+    { cache: 'no-store' }
+  );
+  const raw = await response.json();
+  console.log('siteinfo', raw.name)
+  return { name: raw.name, description: raw.description };
 }
 
 const Home = async () => {
   // DEV ONLY: artificial delay to preview loading.tsx — remove before deploying
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const posts = await getPosts();
 
@@ -34,14 +44,17 @@ const Home = async () => {
     post.categories.includes(projectsCategoryId)
   );
 
+  const siteInfo = await getSiteInfo();
+
   return (
     <div className="flex flex-col flex-1 items-center body">
         <Animations />
       <main className="flex flex-1 w-full flex-col items-center justify-between gap-4 max-w-[90%] py-16 md:max-w-3xl">
         
           <div className="title-card rounded-md mb-4 p-4">
-            <h1 className="text-2xl font-bold">(anderson) wilkes booth</h1>
-          </div>  
+            <h1 className="text-2xl font-bold">{siteInfo.name}</h1>
+            <p>{siteInfo.description}</p>
+          </div>
           {/* <div className="title-card rounded-md mb-4 p-4">
             <h2 className="text-lg font-bold mb-0">jobs</h2>
           </div>   */}
