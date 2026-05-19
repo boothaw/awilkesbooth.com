@@ -6,7 +6,6 @@ export function SunAnimation() {
   useLayoutEffect(() => {
     const sunEl = document.querySelector<HTMLElement>('.sun-wrapper');
     const sun = document.querySelector<HTMLElement>('.sun-wrapper .sun');
-    const contentEl = document.querySelector<HTMLElement>('.body main');
     const horizonEl = document.querySelector<HTMLElement>('.loading-horizon');
     if (!sunEl) return;
 
@@ -20,8 +19,6 @@ export function SunAnimation() {
     const startY = horizonY - naturalTop;
 
     gsap.set(sunEl, { x: startX, y: startY });
-    if (contentEl) gsap.set(contentEl, { opacity: 0 });
-
     const tl = gsap.timeline({
       onComplete: () => { gsap.set(sunEl, { clearProps: 'transform' }); },
     });
@@ -41,15 +38,10 @@ export function SunAnimation() {
     if (horizonEl) {
       tl.to(horizonEl, { opacity: 0, duration: .2, ease: 'power2.in' }, 0.5);
     }
-    if (contentEl) {
-      tl.to(contentEl, { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, 2.5);
-    }
-
     return () => {
       tl.kill();
       gsap.set(sunEl, { clearProps: 'transform' });
       if (horizonEl) gsap.set(horizonEl, { clearProps: 'opacity' });
-      if (contentEl) gsap.set(contentEl, { clearProps: 'opacity' });
     };
   }, []);
 

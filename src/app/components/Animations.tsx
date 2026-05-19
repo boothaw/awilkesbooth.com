@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger} from 'gsap/all';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
@@ -137,6 +137,19 @@ export function Animations() {
     });
 
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
+  }, []);
+
+  useLayoutEffect(() => {
+    const contentEl = document.querySelector<HTMLElement>('.body main');
+    if (!contentEl) return;
+
+    gsap.set(contentEl, { opacity: 0 });
+    const tween = gsap.to(contentEl, { opacity: 1, duration: 1.5, delay: 2.5, ease: 'power2.inOut' });
+
+    return () => {
+      tween.kill();
+      gsap.set(contentEl, { clearProps: 'opacity' });
+    };
   }, []);
 
   return null;
