@@ -23,17 +23,18 @@ export function SunAnimation() {
       onComplete: () => { gsap.set(sunEl, { clearProps: 'transform' }); },
     });
 
+    tl.addLabel('rising');
     tl.fromTo(sunEl, {
       scale: 2
     },{scale: 1.25, y: 0, duration: 2.5, ease: 'power2.out' });
-    tl.fromTo(sunEl,{
-      scale: 1.25
-    }, { scale: 1.0, x: 0, duration: 2.5, ease: 'power2.inOut' });
     tl.fromTo(sun,
       { boxShadow: "0px 0px 0px 0px #f5a623" },
       { boxShadow: "0px 0px 15px 2px #f5a623", duration: 1.5, ease: "power2.out" },
-      "<0.5"
+      "rising+=0.5"
     )
+    tl.fromTo(sunEl,{
+      scale: 1.25
+    }, { scale: 1.0, x: 0, duration: 2.5, ease: 'power2.inOut' });
 
     if (horizonEl) {
       tl.to(horizonEl, { opacity: 0, duration: .2, ease: 'power2.in' }, 0.5);
