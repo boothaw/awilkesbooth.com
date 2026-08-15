@@ -15,7 +15,15 @@ export function Animations() {
       effects: true,
     });
 
-    return () => smoother.kill();
+    // Hold scroll (wheel/touch/keyboard) until the sun finishes its intro animation.
+    smoother.paused(true);
+    const unlockScroll = () => smoother.paused(false);
+    window.addEventListener('sun-animation-complete', unlockScroll);
+
+    return () => {
+      window.removeEventListener('sun-animation-complete', unlockScroll);
+      smoother.kill();
+    };
   }, []);
   useEffect(() => {
     const cards = gsap.utils.toArray<HTMLElement>('.card, .title-card');

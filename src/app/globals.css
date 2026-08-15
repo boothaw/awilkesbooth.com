@@ -93,6 +93,13 @@ a {
     margin-bottom: 0.5em;
   }
 
+  p:not(:last-of-type) > strong {
+    color: var(--foreground-opacity);
+    font-weight: 600;
+  }
+  p:last-child strong {
+    color: var(--foreground-opacity);
+  }
   .tag {
     background-color: var(--blue-opacity);
     border: 2px solid var(--foreground-opacity);

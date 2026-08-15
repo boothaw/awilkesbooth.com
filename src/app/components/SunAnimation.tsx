@@ -7,7 +7,11 @@ export function SunAnimation() {
     const sunEl = document.querySelector<HTMLElement>('.sun-wrapper');
     const sun = document.querySelector<HTMLElement>('.sun-wrapper .sun');
     const horizonEl = document.querySelector<HTMLElement>('.loading-horizon');
-    if (!sunEl) return;
+    if (!sunEl) {
+      // Nothing to animate — don't leave scroll locked waiting for a completion event that'll never fire.
+      window.dispatchEvent(new Event('sun-animation-complete'));
+      return;
+    }
 
     const sunRect = sunEl.getBoundingClientRect();
     const naturalTop = sunRect.top;   // ~16px (1em)
@@ -20,7 +24,10 @@ export function SunAnimation() {
 
     gsap.set(sunEl, { x: startX, y: startY });
     const tl = gsap.timeline({
-      onComplete: () => { gsap.set(sunEl, { clearProps: 'transform' }); },
+      onComplete: () => {
+        gsap.set(sunEl, { clearProps: 'transform' });
+        window.dispatchEvent(new Event('sun-animation-complete'));
+      },
     });
 
     tl.addLabel('rising');
@@ -41,6 +48,8 @@ export function SunAnimation() {
       tl.to(horizonEl, { opacity: 0, duration: .2, ease: 'power2.in' }, 0.5);
     }
     return () => {
+      // If we're unmounting before the timeline finished, release the scroll lock anyway.
+      if (tl.progress() < 1) window.dispatchEvent(new Event('sun-animation-complete'));
       tl.kill();
       gsap.set(sunEl, { clearProps: 'transform' });
       if (horizonEl) gsap.set(horizonEl, { clearProps: 'opacity' });
