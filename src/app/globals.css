@@ -7,8 +7,10 @@
   --blue: #60a6e1;
   --blue-opacity: #60a6e133;
   --yellow: #f5a623;
-  /* Pre-dawn sky; SunAnimation tweens --sky from this to --background as the sun rises. */
-  --night: #013f4b;
+  /* Pre-dawn sky gradient: teal lifted toward --blue up top, deep teal at the bottom.
+     SunAnimation tweens --sky-top/--sky-bottom from these to --background as the sun rises. */
+  --night-top: #1e6a85;
+  --night-bottom: #00161b;
 }
 
 @theme inline {
@@ -40,8 +42,10 @@ strong {
 }
 
 body {
-  --sky: var(--night);
-  background: var(--sky);
+  --sky-top: var(--night-top);
+  --sky-bottom: var(--night-bottom);
+  /* fixed: size the gradient to the viewport (content lives in a fixed wrapper, so body has no height of its own). */
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom)) fixed;
   color: var(--foreground);
   position: relative;
   font-family: var(--font-body);
@@ -131,7 +135,8 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--sky);
+  /* Same fixed gradient as body so the horizon blends in seamlessly. */
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom)) fixed;
   z-index: 6;
   pointer-events: none;
   animation: horizonFade 0.4s ease-in 0.5s both;
