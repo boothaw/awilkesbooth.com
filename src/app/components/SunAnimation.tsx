@@ -7,7 +7,11 @@ export function SunAnimation() {
     const sunEl = document.querySelector<HTMLElement>('.sun-wrapper');
     const sun = document.querySelector<HTMLElement>('.sun-wrapper .sun');
     const horizonEl = document.querySelector<HTMLElement>('.loading-horizon');
+    const rootStyles = getComputedStyle(document.documentElement);
+    const night = rootStyles.getPropertyValue('--night').trim();
+    const day = rootStyles.getPropertyValue('--background').trim();
     if (!sunEl) {
+      gsap.set(document.body, { '--sky': day });
       // Nothing to animate — don't leave scroll locked waiting for a completion event that'll never fire.
       window.dispatchEvent(new Event('sun-animation-complete'));
       return;
@@ -44,6 +48,13 @@ export function SunAnimation() {
       scale: 1.25
     }, { scale: 1.0, x: 0, duration: 2.5, ease: 'power2.inOut' }, 'moving');
 
+    // Sky brightens as the sun breaks the horizon (~0.4s) and is fully day before the sun reaches the top (2.5s).
+    tl.fromTo(document.body,
+      { '--sky': night },
+      { '--sky': day, duration: 1.8, ease: 'power2.out' },
+      'rising+=0.4'
+    );
+
     if (horizonEl) {
       tl.to(horizonEl, { opacity: 0, duration: .2, ease: 'power2.in' }, 0.5);
     }
@@ -52,6 +63,7 @@ export function SunAnimation() {
       if (tl.progress() < 1) window.dispatchEvent(new Event('sun-animation-complete'));
       tl.kill();
       gsap.set(sunEl, { clearProps: 'transform' });
+      gsap.set(document.body, { '--sky': day });
       if (horizonEl) gsap.set(horizonEl, { clearProps: 'opacity' });
     };
   }, []);

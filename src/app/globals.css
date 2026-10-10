@@ -7,6 +7,8 @@
   --blue: #60a6e1;
   --blue-opacity: #60a6e133;
   --yellow: #f5a623;
+  /* Pre-dawn sky; SunAnimation tweens --sky from this to --background as the sun rises. */
+  --night: #013f4b;
 }
 
 @theme inline {
@@ -38,7 +40,8 @@ strong {
 }
 
 body {
-  background: var(--background);
+  --sky: var(--night);
+  background: var(--sky);
   color: var(--foreground);
   position: relative;
   font-family: var(--font-body);
@@ -128,7 +131,7 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--background);
+  background: var(--sky);
   z-index: 6;
   pointer-events: none;
   animation: horizonFade 0.4s ease-in 0.5s both;
