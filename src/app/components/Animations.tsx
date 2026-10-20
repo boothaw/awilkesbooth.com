@@ -50,9 +50,10 @@ export function Animations() {
         const dy = sunY - cardY;
         const angle = Math.atan2(dx, -dy) * (180 / Math.PI) + 180;
 
+        // The gradient itself lives in globals.css so each theme can color the light.
         gsap.to(card, {
-          boxShadow: `${x}px ${y}px 0px var(--foreground-opacity)`,
-          background: `linear-gradient(${angle}deg, #fff 5%, #f5a62305 15%, #60a6e122 90%)`,
+          boxShadow: `${x}px ${y}px 0px var(--shadow)`,
+          '--light-angle': `${angle}deg`,
           duration: 0.4,
           ease: 'power2.out',
           overwrite: 'auto',
