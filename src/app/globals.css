@@ -92,6 +92,11 @@ a {
     strong {
       color: var(--foreground);
       font-size: 1.5em;
+
+      /* ~30% smaller on mobile, matching the h1's text-lg -> md:text-2xl */
+      @media (width < 48rem) {
+        font-size: 1.05em;
+      }
     }
   }
 

@@ -17,13 +17,13 @@ export function Card({post, tags, isProject}: CardProps) {
     <div className={`card rounded-sm post- mb-4 p-4`} >
       {isProject ? (
         <>
-          <h2 className="mb-4 flex justify-between items-center"><strong>{post.title}</strong></h2>
+          <h2 className="mb-4 flex flex-col items-start gap-1 md:flex-row md:justify-between md:items-center"><strong>{post.title}</strong></h2>
           <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </>
       ) : (
         <>
-          <h2 className="mb-4 flex justify-between items-center" dangerouslySetInnerHTML={{ __html: firstP }} />
+          <h2 className="mb-4 flex flex-col items-start gap-1 md:flex-row md:justify-between md:items-center" dangerouslySetInnerHTML={{ __html: firstP }} />
           <p className="font-bold mb-4 text-brand-foreground-opacity"><strong>{post.title}</strong></p>
           <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
           <div dangerouslySetInnerHTML={{ __html: restContent }} />

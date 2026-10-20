@@ -52,14 +52,14 @@ const Home = async () => {
     <div className="flex flex-col flex-1 items-center body">
         <Animations />
       <main className="flex flex-1 w-full flex-col items-center justify-between gap-4 max-w-[90%] py-16 md:max-w-3xl">
-          <div className="title-card rounded-sm mb-4 p-4 w-full gap-4">
-            <div className="flex w-full justify-between items-center">
-              <h1 className="text-2xl font-bold">{siteInfo.name}</h1>
+          <div className="title-card rounded-sm mb-4 p-4 w-full flex flex-col gap-4">
+            <div className="flex flex-col items-start gap-2 w-full md:flex-row md:justify-between md:items-center">
+              <h1 className="text-lg md:text-2xl font-bold">{siteInfo.name}</h1>
               <h2 className="mb-0">Software Engineer</h2>
             </div>
-             <div className="flex w-full justify-between items-center gap-8">
-              <p className="mb-0 w-[70%]">{siteInfo.description}</p>
-              <div className="flex justify-end items-center gap-4">
+             <div className="flex flex-col items-start gap-4 w-full md:flex-row md:justify-between md:items-center md:gap-8">
+              <p className="mb-0 w-full md:w-[70%]">{siteInfo.description}</p>
+              <div className="flex justify-start items-center gap-4 md:justify-end">
                 <a
                   href="https://www.linkedin.com/in/wilkes-booth-56310bb4/"
                   target="_blank"
