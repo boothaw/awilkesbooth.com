@@ -11,6 +11,16 @@
      SunAnimation tweens --sky-top/--sky-bottom from these to --background as the sun rises. */
   --night-top: #1e6a85;
   --night-bottom: #00161b;
+  /* Where the sky settles once the sun is up. */
+  --day-top: var(--background);
+  --day-bottom: var(--background);
+  --sun: var(--yellow);
+  --sun-glow: var(--yellow);
+  --shadow: var(--foreground-opacity);
+  /* Sunlight falling across the cards; Animations sets --light-angle to point at the sun. */
+  --card-light: #fff;
+  --card-mid: #f5a62305;
+  --card-far: #60a6e122;
 }
 
 @theme inline {
@@ -23,10 +33,21 @@
   --font-body: var(--font-space-grotesk);
 }
 
+/* Dark mode is a moonrise: the sky stays night, the sun becomes a pale moon
+   and the light on the cards turns to a faint cool sheen. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #00161b;
     --foreground: #f7f4f2;
+    --foreground-opacity: #f7f4f299;
+    --day-top: #0c3a4a;
+    --day-bottom: var(--night-bottom);
+    --sun: #f3efe6;
+    --sun-glow: #9cc9ee;
+    --shadow: #60a6e14d;
+    --card-light: #ffffff1f;
+    --card-mid: #60a6e10d;
+    --card-far: #60a6e11a;
   }
 }
 
@@ -84,7 +105,14 @@ a {
   /* visibility: hidden; */
   opacity: 0;
   border: 4px solid var(--foreground);
-  box-shadow: 5px 5px 0px var(--foreground-opacity);
+  box-shadow: 5px 5px 0px var(--shadow);
+  --light-angle: 135deg;
+  background: linear-gradient(
+    var(--light-angle),
+    var(--card-light) 5%,
+    var(--card-mid) 15%,
+    var(--card-far) 90%
+  );
 
   h2 {
     color: var(--foreground-opacity);
@@ -210,7 +238,7 @@ a {
 .sun {
   height: 3.5em;
   width: 3.5em;
-  background-color: var(--yellow);
+  background-color: var(--sun);
   border-radius: 50%;
 }
 
@@ -218,5 +246,17 @@ a {
   .sun {
     width: 2em;
     height: 2em;
+  }
+}
+
+/* Dark mode: cut a circle out of the sun to make a crescent moon. The mask also
+   clips the animated box-shadow glow, so the wrapper carries the glow instead. */
+@media (prefers-color-scheme: dark) {
+  .sun {
+    mask: radial-gradient(circle at 72% 30%, transparent 40%, #000 41%);
+  }
+
+  .sun-wrapper {
+    filter: drop-shadow(0 0 6px var(--sun-glow));
   }
 }

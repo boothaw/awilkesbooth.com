@@ -10,7 +10,8 @@ export function SunAnimation() {
     const rootStyles = getComputedStyle(document.documentElement);
     const cssVar = (name: string) => rootStyles.getPropertyValue(name).trim();
     const night = { '--sky-top': cssVar('--night-top'), '--sky-bottom': cssVar('--night-bottom') };
-    const day = { '--sky-top': cssVar('--background'), '--sky-bottom': cssVar('--background') };
+    const day = { '--sky-top': cssVar('--day-top'), '--sky-bottom': cssVar('--day-bottom') };
+    const glow = cssVar('--sun-glow');
     if (!sunEl) {
       gsap.set(document.body, day);
       // Nothing to animate — don't leave scroll locked waiting for a completion event that'll never fire.
@@ -41,8 +42,8 @@ export function SunAnimation() {
     },{scale: 1.25, y: 0, duration: 2.5, ease: 'power2.out' });
     tl.addLabel('moving', 2.5);
     tl.fromTo(sun,
-      { boxShadow: "0px 0px 0px 0px #f5a623" },
-      { boxShadow: "0px 0px 15px 2px #f5a623", duration: 1.5, ease: "power2.out" },
+      { boxShadow: `0px 0px 0px 0px ${glow}` },
+      { boxShadow: `0px 0px 15px 2px ${glow}`, duration: 1.5, ease: "power2.out" },
       "rising+=0.5"
     )
     tl.fromTo(sunEl,{
