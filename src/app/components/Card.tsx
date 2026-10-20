@@ -29,13 +29,18 @@ export function Card({post, tags, isProject}: CardProps) {
           <div dangerouslySetInnerHTML={{ __html: restContent }} />
         </>
       )}
-      <div className="flex flex-wrap gap-2 mt-2">
-        {tags.map(tag => (
-          <span key={tag.id} className="text-xs px-2 py-1 rounded tag">
-            {tag.name}
-          </span>
-        ))}
-      </div>
+      {tags.length > 0 && (
+        <>
+          <p><strong>Tech:</strong></p>
+          <div className="flex flex-wrap gap-2">
+            {tags.map(tag => (
+              <span key={tag.id} className="text-xs px-2 py-1 rounded tag">
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
