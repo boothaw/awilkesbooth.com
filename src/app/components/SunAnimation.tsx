@@ -12,8 +12,15 @@ export function SunAnimation() {
     const night = { '--sky-top': cssVar('--night-top'), '--sky-bottom': cssVar('--night-bottom') };
     const day = { '--sky-top': cssVar('--day-top'), '--sky-bottom': cssVar('--day-bottom') };
     const glow = cssVar('--sun-glow');
+    // GSAP tweens between the resolved colors above, which would freeze them at this
+    // page load's theme. Once it's done, hand back to the CSS variables so the sky and
+    // glow follow a theme change without a reload.
+    const settleSky = () => {
+      document.body.style.setProperty('--sky-top', 'var(--day-top)');
+      document.body.style.setProperty('--sky-bottom', 'var(--day-bottom)');
+    };
     if (!sunEl) {
-      gsap.set(document.body, day);
+      settleSky();
       // Nothing to animate — don't leave scroll locked waiting for a completion event that'll never fire.
       window.dispatchEvent(new Event('sun-animation-complete'));
       return;
@@ -32,6 +39,8 @@ export function SunAnimation() {
     const tl = gsap.timeline({
       onComplete: () => {
         gsap.set(sunEl, { clearProps: 'transform' });
+        settleSky();
+        if (sun) sun.style.boxShadow = '0px 0px 15px 2px var(--sun-glow)';
         window.dispatchEvent(new Event('sun-animation-complete'));
       },
     });
@@ -65,7 +74,7 @@ export function SunAnimation() {
       if (tl.progress() < 1) window.dispatchEvent(new Event('sun-animation-complete'));
       tl.kill();
       gsap.set(sunEl, { clearProps: 'transform' });
-      gsap.set(document.body, day);
+      settleSky();
       if (horizonEl) gsap.set(horizonEl, { clearProps: 'opacity' });
     };
   }, []);

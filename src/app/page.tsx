@@ -55,7 +55,11 @@ const Home = async () => {
           <div className="title-card rounded-sm mb-4 p-4 w-full flex flex-col gap-4">
             <div className="flex flex-col items-start gap-2 w-full md:flex-row md:justify-between md:items-center">
               <h1 className="text-lg md:text-2xl font-bold">{siteInfo.name}</h1>
-              <h2 className="mb-0">Software Engineer</h2>
+              <div className="role">
+                {/* tabIndex lets keyboard and touch users open the bubble, which has no hover. */}
+                <h2 className="mb-0" tabIndex={0} aria-describedby="role-description">Software Engineer</h2>
+                <p id="role-description" role="tooltip" className="role-bubble">Applies computer science principles and engineering methods to design, develop, test, maintain, and evaluate software systems and applications.</p>
+              </div>
             </div>
              <div className="flex flex-col items-start gap-4 w-full md:flex-row md:justify-between md:items-center md:gap-8">
               <p className="mb-0 w-full md:w-[70%]">{siteInfo.description}</p>
