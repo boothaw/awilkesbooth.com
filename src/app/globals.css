@@ -21,6 +21,10 @@
   --card-light: #fff;
   --card-mid: #f5a62305;
   --card-far: #60a6e122;
+  /* Site-wide cursor: a brand yellow circle, like the sun. Falls back to the system cursor. */
+  --cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='8' fill='%23f5a623'/%3E%3C/svg%3E")
+      10 10,
+    auto;
 }
 
 @theme inline {
@@ -48,7 +52,16 @@
     --card-light: #ffffff1f;
     --card-mid: #60a6e10d;
     --card-far: #60a6e11a;
+    /* Same as --foreground above; an image can't read CSS variables, so keep the two in sync. */
+    --cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='8' fill='%23f7f4f2'/%3E%3C/svg%3E")
+        10 10,
+      auto;
   }
+}
+
+/* On every element, because browsers give links and text their own cursors by default. */
+* {
+  cursor: var(--cursor);
 }
 
 h1,
@@ -213,7 +226,6 @@ a {
   position: relative;
 
   h2 {
-    cursor: help;
     text-decoration: underline;
     transition: color ease-in 0.3s;
   }
