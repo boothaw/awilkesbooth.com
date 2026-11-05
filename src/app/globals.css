@@ -199,9 +199,61 @@ a {
 }
 
 .title-card {
+  /* Keep the role bubble above the cards that follow, which have their own stacking contexts. */
+  position: relative;
+  z-index: 1;
+
   p {
     margin-bottom: 0;
     color: var(--foreground);
+  }
+}
+
+.role {
+  position: relative;
+
+  h2 {
+    cursor: help;
+    text-decoration: underline;
+    transition: color ease-in 0.3s;
+  }
+
+  &:hover h2,
+  &:focus-within h2 {
+    color: var(--blue);
+  }
+
+  &:hover .role-bubble,
+  &:focus-within .role-bubble {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Opaque background, unlike the cards, because it sits on top of other text.
+   Below the label; from the md breakpoint up the label sits at the card's right
+   edge, so the bubble lines up with its right side to stay inside the card. */
+.role-bubble {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 15rem;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background-color: var(--background);
+  border: 4px solid var(--foreground);
+  border-radius: 0.25rem;
+  box-shadow: 5px 5px 0px var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity ease-in 0.2s,
+    visibility ease-in 0.2s;
+
+  @media (width >= 48rem) {
+    left: auto;
+    right: 0;
   }
 }
 
